@@ -1,0 +1,9 @@
+<%@ import val page: com.oleksandrah.cms.Page %>
+
+<div class="row">
+<div class="span6">
+    <h2><%= page.title %> </h2>
+    <p class="lead"><%= page.summary %></p>
+    <p><%= page.body %></p>
+</div>
+</div>
