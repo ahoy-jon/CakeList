@@ -1,10 +1,23 @@
 package com.oleksandrah.cakes
 
-import com.oleksandrah.cakes.model.Cakes
+import com.oleksandrah.cakes.model.{Cake, Tables}
 import org.scalatra.ScalatraServlet
 import org.scalatra.scalate.ScalateSupport
+import slick.jdbc.H2Profile
+import slick.jdbc.H2Profile.api._
 
-class CakeServlet(cakes : collection.mutable.Map[Integer, Cakes]) extends ScalatraServlet with ScalateSupport {
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
+
+class CakeServlet(db: H2Profile.backend.Database) extends ScalatraServlet with ScalateSupport {
+
+  def exec[T](action: DBIO[T]): T = Await.result(db.run(action), Duration.Inf)
+
+
+  def cakes: Map[Int, Cake] = {
+    exec(Tables.cakes.result).map(x => x.id -> x).toMap
+  }
 
   get("/") {
     contentType = "text/html"
@@ -13,18 +26,23 @@ class CakeServlet(cakes : collection.mutable.Map[Integer, Cakes]) extends Scalat
 
   post("/new") {
     val id = cakes.size
-    cakes.put(id, Cakes(id, params.get("cakes").get, completed = false))
+
+    exec(Tables.cakes += Cake(id, params.get("cakes").get, false))
+    //cakes.put(id, Cake(id, params.get("cakes").get, completed = false))
     redirect("/")
   }
 
   get("/:id/completed") {
-    val cake = cakes.get(params("id").toInt).get
-    cake.completed = true
+    val id = params("id").toInt
+
+    exec(Tables.cakes.filter(_.id === id).map(_.completed).update(true))
+
     redirect("/")
   }
 
   get("/:id/delete") {
-     cakes.remove(params("id").toInt)
+    val id = params("id").toInt
+    exec(Tables.cakes.filter(_.id === id).delete)
     redirect("/")
   }
 }

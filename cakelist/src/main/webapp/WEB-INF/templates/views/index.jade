@@ -1,7 +1,7 @@
--import com.oleksandrah.cakes.model.Cakes
+-import com.oleksandrah.cakes.model.Cake
 -import com.oleksandrah.cakes.SlickApp
 
--@ val cakes : List[Cakes]
+-@ val cakes : List[Cake]
 
 
 h1 Scalatra Cakes-list
@@ -14,10 +14,10 @@ form(name="newCakes" action="/new" method="post")
 
 h2 Cakes to eat
 ul
-- for (cakes <- cakes)
-    - if (cakes.completed)
-        li <strike>#{cakes.body}</strike>  <a href="/#{cakes.id}/delete">[delete]</a>
+- for (cake <- cakes)
+    - if (cake.completed)
+        li <strike>#{cake.name}</strike>  <a href="/#{cake.id}/delete">[delete]</a>
     - else
-        li #{cakes.body}  <a href="/#{cakes.id}/completed">[completed]</a>
+        li #{cake.name}  <a href="/#{cake.id}/completed">[completed]</a>
 h2 Tables to show
 

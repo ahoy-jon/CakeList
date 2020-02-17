@@ -6,7 +6,7 @@ name := "CakeList"
 
 version := "1.0.0"
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.12"
 
 //val scalatraVersion = "2.4.0-RC2-2"
 

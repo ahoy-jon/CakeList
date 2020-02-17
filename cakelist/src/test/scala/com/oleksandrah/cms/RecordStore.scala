@@ -6,9 +6,11 @@ import org.scalatra.scalate
 
 class RecordStore extends ScalatraServlet {
   get("/artists/:name/info") {
-  Artist.find(params("name")) match {
+
+    status = 404
+ /* Artist.find(params("name")) match {
     case Some(artist) => artist.toXml
     case None => status = 404
-  }
+  }*/
   }
 }
