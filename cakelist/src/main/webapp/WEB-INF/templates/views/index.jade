@@ -1,6 +1,8 @@
 -import com.oleksandrah.cakes.model.Cakes
+-import com.oleksandrah.cakes.SlickApp
 
 -@ val cakes : List[Cakes]
+
 
 h1 Scalatra Cakes-list
 
@@ -17,3 +19,5 @@ ul
         li <strike>#{cakes.body}</strike>  <a href="/#{cakes.id}/delete">[delete]</a>
     - else
         li #{cakes.body}  <a href="/#{cakes.id}/completed">[completed]</a>
+h2 Tables to show
+
