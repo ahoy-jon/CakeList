@@ -1,0 +1,19 @@
+-import com.oleksandrah.cakes.model.Cakes
+
+-@ val cakes : List[Cakes]
+
+h1 Scalatra Cakes-list
+
+form(name="newCakes" action="/new" method="post")
+    Add new Cakes:
+    input(type="text" name="cakes")
+    button(type="submit" name="add")
+        New cakes
+
+h2 Cakes to eat
+ul
+- for (cakes <- cakes)
+    - if (cakes.completed)
+        li <strike>#{cakes.body}</strike>  <a href="/#{cakes.id}/delete">[delete]</a>
+    - else
+        li #{cakes.body}  <a href="/#{cakes.id}/completed">[completed]</a>
